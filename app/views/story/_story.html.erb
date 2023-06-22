@@ -1,4 +1,6 @@
 <div class="d-flex flex-column align-items-center justify-content-center">
-    <%= image_tag "user-pp.png", class: "img-thumbnail rounded-circle border border-2 border-primary", style: "width: 3.5rem" %>
-    <small style="max-width: 4.5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><%= current_user.username%></small>
+    <%= image_tag story.user.profile_pic.attached? ? story.user.profile_pic : 'user-pp.png', class: "img-thumbnail rounded-circle border border-2 border-primary", style: "width: 3.5rem"  %>
+    <%= link_to story.user, class: "a-decoration-none" do %>
+        <small style="max-width: 4.5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><%= story.user.username%></small>
+    <% end%>
 </div>

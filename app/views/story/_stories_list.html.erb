@@ -1,5 +1,10 @@
 <div class= "card d-flex flex-row all align-items-center justify-content-center gap-3 px-3" style="width:25rem; height:7rem; overflow-x:scroll">
-  <% 8.times do %>
-    <%= render "story/story" %>
+  <a type="button" class="text-dark" data-bs-toggle="modal" data-bs-target="#storyBackdrop">
+    <i class="fa-regular fa-square-plus fa-xl"></i>
+  </a>
+  <% Story.all.each do |story| %>
+    <%= render "story/story", story: story%>
   <%end %>
 </div>
+
+<%= render "story/form", story: Story.new %>
