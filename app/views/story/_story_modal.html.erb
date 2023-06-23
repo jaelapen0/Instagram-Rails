@@ -1,0 +1,32 @@
+<a href= "#"  data-bs-toggle="modal" data-bs-target="#story<%= story.id %>_likesModal" style="text-decoration:none" class="text-dark">
+    <small class="fw-bold my-1"> <%= pluralize(story.likes.count, "like") %> </small>
+  </a>
+  
+
+    <div class="card-body">
+      <div id="post<%= post.id %>_images" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+          <% post.images.each_with_index do |img, i| %>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i %>" class="<%= i == 0 ? 'active' : '' %> bg-dark" <%= i == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <% i %>"></button>
+          <% end %>
+        </div>
+      
+      <div id="post<%= story.id %>_images" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <% story.images.each_with_index  do |img, i| %>
+            <div class="carousel-item <%= i == 0 ? 'active' : '' %>" style="height: 25rem">
+              <%= image_tag img, class: "d-block w-100", style: "max-height: 100%; object-fit: cover;" %>
+            </div>
+          <% end %>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#post<%= story.id %>_images" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#post<%= story.id %>_images" data-bs-slide="next">
+          <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+

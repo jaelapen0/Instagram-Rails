@@ -1,5 +1,16 @@
 <div class= "card d-flex flex-row all align-items-center justify-content-center gap-3 px-3" style="width:25rem; height:7rem; overflow-x:scroll">
-  <% 8.times do %>
-    <%= render "story/story" %>
+  <div class= "story-img">
+    <a type="button" class="text-dark" data-bs-toggle="modal" data-bs-target="#storyBackdrop">
+      <i class="fa-regular fa-square-plus fa-xl"></i>
+      <%= image_tag current_user.profile_pic.attached? ? current_user.profile_pic : 'user-pp.png', class: "img-thumbnail rounded-circle border border-2 border-primary", style: "width: 3.5rem"  %>
+      
+    </a>
+  </div>
+  <% stories = Story.where(user: [current_user, current_user.followings].flatten).order(created_at: :desc ).group_by {|story| story.user_id }%>
+
+  <% stories.each do |user_id, grouped_stories| %>
+    <%= render "story/story", grouped_stories: grouped_stories%>
   <%end %>
 </div>
+
+<%= render "story/form", story: Story.new %>

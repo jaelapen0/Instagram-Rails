@@ -106,3 +106,14 @@ body{
   text-decoration: none;
   color: black;
 }
+
+.story-img{
+  position: relative;
+  left: 50;
+}
+
+.story-img > i {
+  position: absolute;
+  background: white;
+  bottom: 10;
+}

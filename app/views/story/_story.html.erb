@@ -1,4 +1,65 @@
 <div class="d-flex flex-column align-items-center justify-content-center">
-    <%= image_tag "user-pp.png", class: "img-thumbnail rounded-circle border border-2 border-primary", style: "width: 3.5rem" %>
-    <small style="max-width: 4.5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><%= current_user.username%></small>
+  
+    <a href= "#"  data-bs-toggle="modal" data-bs-target="#grouped_stories<%= grouped_stories.first.id %>_likesModal" style="text-decoration:none" class="text-dark">
+        <%= image_tag grouped_stories.first.user.profile_pic.attached? ? grouped_stories.first.user.profile_pic : 'user-pp.png', 
+        class: "img-thumbnail rounded-circle border border-2 border-primary", style: "width: 3.5rem"  %>
+       
+    </a>
+    <%= link_to grouped_stories.first.user, class: "a-decoration-none" do %>
+        <small style="max-width: 4.5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><%= grouped_stories.first.user.username%></small>
+    <% end%>
+            
+ 
+        
+
+    <div class="modal fade" id="grouped_stories<%= grouped_stories.first.id %>_likesModal" tabindex="-1" aria-labelledby="grouped_stories<%= grouped_stories.first.id %>_likesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                
+
+                <div class="card-body">
+                    <%images = [] %>
+                    <% grouped_stories.each do |story| %>
+                        <% story.images.each {|img| images << img} %>
+                    <% end %>
+                    <%images.sort_by!{ |img| img.created_at } %>
+                    
+                    <div id="story<%= images.first.id %>_images" class="carousel slide" data-bs-ride="carousel">
+                        
+                            <div class="carousel-inner">
+                            <% images.each_with_index  do |img, i| %>
+                                <div class="carousel-item <%= i == 0 ? 'active' : '' %>" style="height: 25rem">
+                                 <small class="text-muted" > <%= time_ago_in_words(img.created_at) %> ago</small>
+                                <%= image_tag img, class: "d-block w-100", style: "max-height: 100%; object-fit: cover;" %>
+                                </div>
+                            <% end %>
+
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#story<%= images.first.id %>_images" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#story<%= images.first.id %>_images" data-bs-slide="next">
+                            <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                            </button>
+                    </div>
+                </div>
+
+            <div class="modal-body">
+            <div class="d-flex flex-column gap-3" >
+                <% grouped_stories.each do |story| %>
+                    <%story.likers.each do |liker| %>
+                        <%= render "story/viewer", liker: liker %>
+                    <% end %>
+                <% end %>
+            </div>
+            </div>
+        
+        </div>
+        </div>
+    </div>
 </div>
