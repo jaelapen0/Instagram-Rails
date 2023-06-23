@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
   before_action :set_story, only: [:show, :destroy]
 
   def index
-    @stories = Story.all
+    @stories = Story.where(user: [current_user, current_user.followings].flatten).order(created_at: :desc )
   end
 
   def create
