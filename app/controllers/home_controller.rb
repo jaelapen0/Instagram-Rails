@@ -16,7 +16,7 @@ class HomeController < ApplicationController
       @suggestions.append(f.followers, f.followings)
     end
     @suggestions = [@suggestions, User.all.sample(10)].flatten.uniq - [current_user.followings, current_user].flatten
-    # debugger
+
     @suggestions = @suggestions.sample(5)
   end
 end
